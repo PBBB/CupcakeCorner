@@ -24,9 +24,11 @@ class Order: ObservableObject, Codable {
     @Published var city = ""
     @Published var zip = ""
     var hasValidAddress: Bool {
-        if name.isEmpty || streetAddress.isEmpty || city.isEmpty || zip.isEmpty {
+        if name.isEmptyOrIsPureWhitespace || streetAddress.isEmptyOrIsPureWhitespace || city.isEmptyOrIsPureWhitespace || zip.isEmptyOrIsPureWhitespace {
             return false
         }
+        
+        
 
         return true
     }
@@ -94,5 +96,19 @@ class Order: ObservableObject, Codable {
     
     init() {
         
+    }
+}
+
+extension String {
+    var isEmptyOrIsPureWhitespace: Bool {
+        if self.isEmpty { return true }
+        
+        for character in self {
+            if String(character) != " " {
+                return false
+            }
+        }
+        
+        return true
     }
 }
